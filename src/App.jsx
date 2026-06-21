@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import './App.css';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedZone, setSelectedZone] = useState('America/New_York');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef(null);
   const previousZone = useRef('America/New_York');
 
   useEffect(() => {
@@ -59,43 +61,43 @@ function App() {
   };
 
   const locations = [
-    { name: 'NEW YORK', zone: 'America/New_York', flag: '🇺🇸' },
-    { name: 'LOS ANGELES', zone: 'America/Los_Angeles', flag: '🇺🇸' },
-    { name: 'MEXICO CITY', zone: 'America/Mexico_City', flag: '🇲🇽' },
-    { name: 'TORONTO', zone: 'America/Toronto', flag: '🇨🇦' },
-    { name: 'VANCOUVER', zone: 'America/Vancouver', flag: '🇨🇦' },
-    { name: 'SAO PAULO', zone: 'America/Sao_Paulo', flag: '🇧🇷' },
-    { name: 'BUENOS AIRES', zone: 'America/Argentina/Buenos_Aires', flag: '🇦🇷' },
-    { name: 'SANTIAGO', zone: 'America/Santiago', flag: '🇨🇱' },
-    { name: 'BOGOTA', zone: 'America/Bogota', flag: '🇨🇴' },
-    { name: 'LIMA', zone: 'America/Lima', flag: '🇵🇪' },
-    { name: 'LONDON', zone: 'Europe/London', flag: '🇬🇧' },
-    { name: 'PARIS', zone: 'Europe/Paris', flag: '🇫🇷' },
-    { name: 'BERLIN', zone: 'Europe/Berlin', flag: '🇩🇪' },
-    { name: 'MOSCOW', zone: 'Europe/Moscow', flag: '🇷🇺' },
-    { name: 'MADRID', zone: 'Europe/Madrid', flag: '🇪🇸' },
-    { name: 'ROME', zone: 'Europe/Rome', flag: '🇮🇹' },
-    { name: 'AMSTERDAM', zone: 'Europe/Amsterdam', flag: '🇳🇱' },
-    { name: 'STOCKHOLM', zone: 'Europe/Stockholm', flag: '🇸🇪' },
-    { name: 'KYIV', zone: 'Europe/Kyiv', flag: '🇺🇦' },
-    { name: 'ISTANBUL', zone: 'Europe/Istanbul', flag: '🇹🇷' },
-    { name: 'DUBAI', zone: 'Asia/Dubai', flag: '🇦🇪' },
-    { name: 'TASHKENT', zone: 'Asia/Tashkent', flag: '🇺🇿' },
-    { name: 'TOKYO', zone: 'Asia/Tokyo', flag: '🇯🇵' },
-    { name: 'SEOUL', zone: 'Asia/Seoul', flag: '🇰🇷' },
-    { name: 'BEIJING', zone: 'Asia/Shanghai', flag: '🇨🇳' },
-    { name: 'MUMBAI', zone: 'Asia/Kolkata', flag: '🇮🇳' },
-    { name: 'BANGKOK', zone: 'Asia/Bangkok', flag: '🇹🇭' },
-    { name: 'SINGAPORE', zone: 'Asia/Singapore', flag: '🇸🇬' },
-    { name: 'TEL AVIV', zone: 'Asia/Jerusalem', flag: '🇮🇱' },
-    { name: 'KARACHI', zone: 'Asia/Karachi', flag: '🇵🇰' },
-    { name: 'CAIRO', zone: 'Africa/Cairo', flag: '🇪🇬' },
-    { name: 'LAGOS', zone: 'Africa/Lagos', flag: '🇳🇬' },
-    { name: 'CAPE TOWN', zone: 'Africa/Johannesburg', flag: '🇿🇦' },
-    { name: 'CASABLANCA', zone: 'Africa/Casablanca', flag: '🇲🇦' },
-    { name: 'SYDNEY', zone: 'Australia/Sydney', flag: '🇦🇺' },
-    { name: 'AUCKLAND', zone: 'Pacific/Auckland', flag: '🇳🇿' },
-    { name: 'HONOLULU', zone: 'Pacific/Honolulu', flag: '🇺🇸' },
+    { name: 'NEW YORK', zone: 'America/New_York', flag: '🇺🇸', country: 'UNITED STATES' },
+    { name: 'LOS ANGELES', zone: 'America/Los_Angeles', flag: '🇺🇸', country: 'UNITED STATES' },
+    { name: 'MEXICO CITY', zone: 'America/Mexico_City', flag: '🇲🇽', country: 'MEXICO' },
+    { name: 'TORONTO', zone: 'America/Toronto', flag: '🇨🇦', country: 'CANADA' },
+    { name: 'VANCOUVER', zone: 'America/Vancouver', flag: '🇨🇦', country: 'CANADA' },
+    { name: 'SAO PAULO', zone: 'America/Sao_Paulo', flag: '🇧🇷', country: 'BRAZIL' },
+    { name: 'BUENOS AIRES', zone: 'America/Argentina/Buenos_Aires', flag: '🇦🇷', country: 'ARGENTINA' },
+    { name: 'SANTIAGO', zone: 'America/Santiago', flag: '🇨🇱', country: 'CHILE' },
+    { name: 'BOGOTA', zone: 'America/Bogota', flag: '🇨🇴', country: 'COLOMBIA' },
+    { name: 'LIMA', zone: 'America/Lima', flag: '🇵🇪', country: 'PERU' },
+    { name: 'LONDON', zone: 'Europe/London', flag: '🇬🇧', country: 'UNITED KINGDOM' },
+    { name: 'PARIS', zone: 'Europe/Paris', flag: '🇫🇷', country: 'FRANCE' },
+    { name: 'BERLIN', zone: 'Europe/Berlin', flag: '🇩🇪', country: 'GERMANY' },
+    { name: 'MOSCOW', zone: 'Europe/Moscow', flag: '🇷🇺', country: 'RUSSIA' },
+    { name: 'MADRID', zone: 'Europe/Madrid', flag: '🇪🇸', country: 'SPAIN' },
+    { name: 'ROME', zone: 'Europe/Rome', flag: '🇮🇹', country: 'ITALY' },
+    { name: 'AMSTERDAM', zone: 'Europe/Amsterdam', flag: '🇳🇱', country: 'NETHERLANDS' },
+    { name: 'STOCKHOLM', zone: 'Europe/Stockholm', flag: '🇸🇪', country: 'SWEDEN' },
+    { name: 'KYIV', zone: 'Europe/Kyiv', flag: '🇺🇦', country: 'UKRAINE' },
+    { name: 'ISTANBUL', zone: 'Europe/Istanbul', flag: '🇹🇷', country: 'TURKEY' },
+    { name: 'DUBAI', zone: 'Asia/Dubai', flag: '🇦🇪', country: 'UAE' },
+    { name: 'TASHKENT', zone: 'Asia/Tashkent', flag: '🇺🇿', country: 'UZBEKISTAN' },
+    { name: 'TOKYO', zone: 'Asia/Tokyo', flag: '🇯🇵', country: 'JAPAN' },
+    { name: 'SEOUL', zone: 'Asia/Seoul', flag: '🇰🇷', country: 'SOUTH KOREA' },
+    { name: 'BEIJING', zone: 'Asia/Shanghai', flag: '🇨🇳', country: 'CHINA' },
+    { name: 'MUMBAI', zone: 'Asia/Kolkata', flag: '🇮🇳', country: 'INDIA' },
+    { name: 'BANGKOK', zone: 'Asia/Bangkok', flag: '🇹🇭', country: 'THAILAND' },
+    { name: 'SINGAPORE', zone: 'Asia/Singapore', flag: '🇸🇬', country: 'SINGAPORE' },
+    { name: 'TEL AVIV', zone: 'Asia/Jerusalem', flag: '🇮🇱', country: 'ISRAEL' },
+    { name: 'KARACHI', zone: 'Asia/Karachi', flag: '🇵🇰', country: 'PAKISTAN' },
+    { name: 'CAIRO', zone: 'Africa/Cairo', flag: '🇪🇬', country: 'EGYPT' },
+    { name: 'LAGOS', zone: 'Africa/Lagos', flag: '🇳🇬', country: 'NIGERIA' },
+    { name: 'CAPE TOWN', zone: 'Africa/Johannesburg', flag: '🇿🇦', country: 'SOUTH AFRICA' },
+    { name: 'CASABLANCA', zone: 'Africa/Casablanca', flag: '🇲🇦', country: 'MOROCCO' },
+    { name: 'SYDNEY', zone: 'Australia/Sydney', flag: '🇦🇺', country: 'AUSTRALIA' },
+    { name: 'AUCKLAND', zone: 'Pacific/Auckland', flag: '🇳🇿', country: 'NEW ZEALAND' },
+    { name: 'HONOLULU', zone: 'Pacific/Honolulu', flag: '🇺🇸', country: 'UNITED STATES' },
   ];
 
   const regions = [
@@ -107,9 +109,18 @@ function App() {
     { name: 'OCEANIA', zones: ['Australia/Sydney','Pacific/Auckland','Pacific/Honolulu'] },
   ];
 
+  const filteredLocations = useMemo(() => {
+    if (!searchQuery.trim()) return null;
+    const q = searchQuery.toLowerCase();
+    return locations.filter(loc => 
+      loc.name.toLowerCase().includes(q) || 
+      loc.country.toLowerCase().includes(q) ||
+      loc.zone.toLowerCase().includes(q)
+    );
+  }, [searchQuery, locations]);
+
   const selectedCity = locations.find(l => l.zone === selectedZone);
 
-  // Generate particle positions
   const particles = Array.from({ length: 50 }, (_, i) => ({
     id: i,
     left: `${Math.random() * 100}%`,
@@ -120,9 +131,31 @@ function App() {
     opacity: Math.random() * 0.5 + 0.1,
   }));
 
+  const renderCityRow = (loc) => (
+    <div
+      key={loc.zone}
+      className={`city-row ${selectedZone === loc.zone ? 'active' : ''}`}
+      onClick={() => handleSelect(loc.zone, loc.name)}
+    >
+      <div className="city-info">
+        <span className="city-flag">{loc.flag}</span>
+        <div className="city-name-group">
+          <span className="city-name">{loc.name}</span>
+          <span className="city-country">{loc.country}</span>
+        </div>
+        <span className="city-offset">{calculateOffset(loc.zone)}</span>
+      </div>
+      <div className="city-time">
+        <span className="city-time-digits">{formatTime(loc.zone)}</span>
+        <div className="select-indicator">
+          <div className="indicator-ring"></div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="dashboard-wrapper">
-      {/* Advanced Animated Background */}
       <div className="animated-bg">
         <div className="gradient-orb orb-1"></div>
         <div className="gradient-orb orb-2"></div>
@@ -148,7 +181,7 @@ function App() {
       </div>
 
       <div className="container">
-        {/* Selected Country Clock */}
+        {/* Main Clock */}
         <div className={`main-clock ${isAnimating ? 'clock-switch' : ''}`}>
           <div className="clock-glow"></div>
           <div className="clock-header">
@@ -156,6 +189,7 @@ function App() {
               <span className="country-flag">{selectedCity?.flag || '🌍'}</span>
               <div className="time-display">
                 <span className="time-digits">{formatTime(selectedZone)}</span>
+                <span className="time-seconds-label">{selectedCity?.country || ''}</span>
               </div>
             </div>
             <div className="clock-actions">
@@ -176,14 +210,77 @@ function App() {
           </div>
         </div>
 
-        {/* World Clock List */}
+        {/* World Clock Card */}
         <div className="world-clock-card">
           <div className="card-title-bar">
             <h2 className="card-title">🌍 WORLD CLOCK</h2>
             <span className="card-subtitle">{locations.length} CITIES</span>
           </div>
 
-          {regions.map((region) => (
+          {/* Search Input */}
+          <div className="search-container">
+            <div className="search-icon">🔍</div>
+            <input
+              ref={searchInputRef}
+              type="text"
+              className="search-input"
+              placeholder="Search country or city..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button className="search-clear" onClick={() => setSearchQuery('')}>
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Search Results */}
+          {filteredLocations && (
+            <div className="search-results">
+              <div className="search-results-header">
+                <span>SEARCH RESULTS ({filteredLocations.length})</span>
+                <span className="region-line"></span>
+              </div>
+              {filteredLocations.length > 0 ? (
+                <div className="region-cities">
+                  {filteredLocations.map((loc) => (
+                    <div
+                      key={loc.zone}
+                      className={`city-row ${selectedZone === loc.zone ? 'active' : ''}`}
+                      onClick={() => {
+                        handleSelect(loc.zone, loc.name);
+                        setSearchQuery('');
+                      }}
+                    >
+                      <div className="city-info">
+                        <span className="city-flag">{loc.flag}</span>
+                        <div className="city-name-group">
+                          <span className="city-name">{loc.name}</span>
+                          <span className="city-country">{loc.country}</span>
+                        </div>
+                        <span className="city-offset">{calculateOffset(loc.zone)}</span>
+                      </div>
+                      <div className="city-time">
+                        <span className="city-time-digits">{formatTime(loc.zone)}</span>
+                        <div className="select-indicator">
+                          <div className="indicator-ring"></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="no-results">
+                  <span>🔍</span>
+                  <p>No cities found for "{searchQuery}"</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Regions */}
+          {!filteredLocations && regions.map((region) => (
             <div key={region.name} className="region-block">
               <div className="region-header">
                 <span className="region-name">{region.name}</span>
@@ -192,15 +289,18 @@ function App() {
               <div className="region-cities">
                 {locations
                   .filter(l => region.zones.includes(l.zone))
-                  .map((loc, index) => (
+                  .map((loc) => (
                     <div
-                      key={index}
+                      key={loc.zone}
                       className={`city-row ${selectedZone === loc.zone ? 'active' : ''}`}
                       onClick={() => handleSelect(loc.zone, loc.name)}
                     >
                       <div className="city-info">
                         <span className="city-flag">{loc.flag}</span>
-                        <span className="city-name">{loc.name}</span>
+                        <div className="city-name-group">
+                          <span className="city-name">{loc.name}</span>
+                          <span className="city-country">{loc.country}</span>
+                        </div>
                         <span className="city-offset">{calculateOffset(loc.zone)}</span>
                       </div>
                       <div className="city-time">
@@ -217,7 +317,7 @@ function App() {
 
           <div className="card-footer-info">
             <div className="footer-glow"></div>
-            <span>Data updates in real-time via browser timezone API</span>
+            <span>Real-time data via browser timezone API</span>
           </div>
         </div>
       </div>
