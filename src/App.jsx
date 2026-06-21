@@ -131,29 +131,6 @@ function App() {
     opacity: Math.random() * 0.5 + 0.1,
   }));
 
-  const renderCityRow = (loc) => (
-    <div
-      key={loc.zone}
-      className={`city-row ${selectedZone === loc.zone ? 'active' : ''}`}
-      onClick={() => handleSelect(loc.zone, loc.name)}
-    >
-      <div className="city-info">
-        <span className="city-flag">{loc.flag}</span>
-        <div className="city-name-group">
-          <span className="city-name">{loc.name}</span>
-          <span className="city-country">{loc.country}</span>
-        </div>
-        <span className="city-offset">{calculateOffset(loc.zone)}</span>
-      </div>
-      <div className="city-time">
-        <span className="city-time-digits">{formatTime(loc.zone)}</span>
-        <div className="select-indicator">
-          <div className="indicator-ring"></div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="dashboard-wrapper">
       <div className="animated-bg">
@@ -181,7 +158,6 @@ function App() {
       </div>
 
       <div className="container">
-        {/* Main Clock */}
         <div className={`main-clock ${isAnimating ? 'clock-switch' : ''}`}>
           <div className="clock-glow"></div>
           <div className="clock-header">
@@ -210,14 +186,12 @@ function App() {
           </div>
         </div>
 
-        {/* World Clock Card */}
         <div className="world-clock-card">
           <div className="card-title-bar">
             <h2 className="card-title">🌍 WORLD CLOCK</h2>
             <span className="card-subtitle">{locations.length} CITIES</span>
           </div>
 
-          {/* Search Input */}
           <div className="search-container">
             <div className="search-icon">🔍</div>
             <input
@@ -235,7 +209,6 @@ function App() {
             )}
           </div>
 
-          {/* Search Results */}
           {filteredLocations && (
             <div className="search-results">
               <div className="search-results-header">
@@ -279,7 +252,6 @@ function App() {
             </div>
           )}
 
-          {/* Regions */}
           {!filteredLocations && regions.map((region) => (
             <div key={region.name} className="region-block">
               <div className="region-header">

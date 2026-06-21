@@ -1,4 +1,3 @@
-/* --- GOOGLE FONTS --- */
 @import url('https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 * {
@@ -27,9 +26,6 @@ body {
     position: relative;
 }
 
-/* =============================================
-   ADVANCED ANIMATED BACKGROUND
-   ============================================= */
 .animated-bg {
     position: fixed;
     top: 0;
@@ -41,7 +37,6 @@ body {
     background: #0a0a0f;
 }
 
-/* Gradient Orbs */
 .gradient-orb {
     position: absolute;
     border-radius: 50%;
@@ -97,7 +92,6 @@ body {
     75% { transform: translate(80px, 40px) scale(1.05); }
 }
 
-/* Grid Overlay */
 .grid-overlay {
     position: absolute;
     top: 0;
@@ -116,7 +110,6 @@ body {
     100% { transform: translate(60px, 60px); }
 }
 
-/* Floating Particles */
 .particle {
     position: absolute;
     background: #ffffff;
@@ -132,7 +125,6 @@ body {
     100% { transform: translateY(-100vh) scale(0); opacity: 0; }
 }
 
-/* Scanline Effect */
 .scanline {
     position: absolute;
     top: 0;
@@ -149,9 +141,6 @@ body {
     100% { top: 100vh; }
 }
 
-/* =============================================
-   CONTAINER
-   ============================================= */
 .container {
     width: 100%;
     max-width: 520px;
@@ -163,9 +152,6 @@ body {
     position: relative;
 }
 
-/* =============================================
-   MAIN CLOCK CARD
-   ============================================= */
 .main-clock {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0.3) 100%);
     backdrop-filter: blur(40px);
@@ -350,9 +336,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* =============================================
-   WORLD CLOCK CARD
-   ============================================= */
 .world-clock-card {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.3) 100%);
     backdrop-filter: blur(30px);
@@ -391,7 +374,6 @@ body {
     border-radius: 20px;
 }
 
-/* Search Container */
 .search-container {
     display: flex;
     align-items: center;
@@ -450,7 +432,6 @@ body {
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* Search Results */
 .search-results {
     margin-bottom: 4px;
 }
@@ -468,13 +449,6 @@ body {
     color: rgba(255, 255, 255, 0.35);
     letter-spacing: 2px;
     white-space: nowrap;
-}
-
-.city-country {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.25);
-    font-weight: 400;
-    letter-spacing: 0.3px;
 }
 
 .no-results {
@@ -506,7 +480,6 @@ body {
     display: block;
 }
 
-/* Region Blocks */
 .region-block {
     margin-bottom: 4px;
 }
@@ -538,7 +511,6 @@ body {
     gap: 2px;
 }
 
-/* City Row */
 .city-row {
     display: flex;
     justify-content: space-between;
@@ -648,7 +620,6 @@ body {
     box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
 }
 
-/* Card Footer */
 .card-footer-info {
     margin-top: 20px;
     padding: 15px 10px 5px;
@@ -674,9 +645,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* =============================================
-   RESPONSIVE
-   ============================================= */
 @media (max-width: 540px) {
     .container {
         max-width: 100%;
