@@ -1,0 +1,309 @@
+/* --- GOOGLE FONTS YUKLASH --- */
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dashboard-wrapper {
+    background-color: #000000;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* --- HARAKATLANUVCHI SHADER BACKGROUND --- */
+.shader-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+.blob {
+    position: absolute;
+    filter: blur(90px);
+    border-radius: 50%;
+    opacity: 0.75;
+    animation: moveBlob infinite alternate linear;
+}
+
+.blob-1 {
+    width: 50vw;
+    height: 50vw;
+    min-width: 400px;
+    background: #ff00ff;
+    top: -10%;
+    left: -10%;
+    animation-duration: 14s;
+}
+
+.blob-2 {
+    width: 60vw;
+    height: 60vw;
+    min-width: 450px;
+    background: #84ff00;
+    top: -15%;
+    right: -15%;
+    animation-duration: 18s;
+    animation-delay: -3s;
+}
+
+.blob-3 {
+    width: 45vw;
+    height: 45vw;
+    min-width: 350px;
+    background: #ffaa00;
+    bottom: 15%;
+    left: 15%;
+    animation-duration: 22s;
+    animation-delay: -6s;
+}
+
+@keyframes moveBlob {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, 60px) scale(1.08); }
+    66% { transform: translate(-50px, 30px) scale(0.95); }
+    100% { transform: translate(20px, -40px) scale(1.02); }
+}
+
+/* --- VIDJETLAR STRUKTURASI --- */
+.container {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    z-index: 1;
+    padding: 10px 0;
+}
+
+/* --- SELECTED COUNTRY CLOCK (MAIN CARD) --- */
+.selected-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 35px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+    transition: all 0.5s ease;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.selected-flag-time {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.big-flag {
+    font-size: 60px;
+    line-height: 1;
+}
+
+.big-time {
+    font-family: 'VT323', monospace;
+    font-size: 65px;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    opacity: 0.5;
+}
+
+.menu-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #ffffff;
+}
+
+.card-body {
+    margin-bottom: 30px;
+}
+
+.offset-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 14px;
+    font-family: 'VT323', monospace;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.time-location, .date-day {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.location {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.time-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+}
+
+.day {
+    font-size: 15px;
+    font-weight: 600;
+    text-align: right;
+    letter-spacing: 0.5px;
+}
+
+.date {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    text-align: right;
+}
+
+/* --- LOCATIONS KARTASI --- */
+.locations-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(0, 0, 0, 0.4) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 35px;
+    padding: 35px 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.section-title {
+    font-family: 'VT323', monospace;
+    font-size: 28px;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+    padding-left: 8px;
+}
+
+.region-group {
+    margin-bottom: 20px;
+}
+
+.region-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 3px;
+    padding: 8px 8px 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 4px;
+}
+
+.location-list {
+    list-style: none;
+}
+
+.location-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.location-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.location-item.active {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.city {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.flag-small {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.offset {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 11px;
+    font-weight: 400;
+    font-family: 'VT323', monospace;
+    letter-spacing: 0.5px;
+}
+
+.local-time {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 1px;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 500px) {
+    .container {
+        max-width: 100%;
+    }
+    .big-time {
+        font-size: 45px;
+    }
+    .big-flag {
+        font-size: 45px;
+    }
+    .selected-card {
+        padding: 20px;
+    }
+    .locations-card {
+        padding: 25px 15px;
+    }
+    .location {
+        font-size: 16px;
+    }
+}
